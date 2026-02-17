@@ -1,0 +1,2 @@
+# gsilver
+scrape concurrent prices
