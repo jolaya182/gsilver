@@ -56,7 +56,7 @@ let stringPrice = "";
 let listOfProducts = [];
 let neededProductsElems = [];
 let prodToSubmitArryObj = [];
-const initMap = new Map();
+let initMap = new Map();
 
 let resetAllVariables = () =>{
  counter = 0;
@@ -70,7 +70,10 @@ let resetAllVariables = () =>{
  neededProductsElems = [];
  prodToSubmitArryObj = [];
  initMap = new Map();
+ console.log("variables reseted");
 }
+
+setTimeout(resetAllVariables, 240000);
 //html set
 let resetCounterNumProdsNumClkLoadBtn = () =>{
         counter = 0;
