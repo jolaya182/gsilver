@@ -240,6 +240,13 @@ let copyToClipBoard = async (text) => {
     
     // console.log(stringPrice);
     let mainForm = document.createElement("form");
+    Object.assign(mainForm.style, { "z-index":"1000",position:"sticky", top: "0", display: "flex", "flex-direction":"row", "flex-wrap": "wrap", "justify-content": "space-around", color: "blue", backgroundColor:"#e5e5e5", height:"100px"});
+
+    let div1 = document.createElement("div");
+    Object.assign(div1.style, {display: "flex", "flex-direction":"row","font-size":"24px", margin: "10px", padding: "20px, "});
+    let div2 = document.createElement("div");
+    Object.assign(div2.style, {display: "flex", "flex-direction":"row","font-size":"24px", margin: "10px", padding: "20px, "});
+    
     
     let getTextArea = document.createElement("textarea");
     getTextArea.setAttribute("id", "mainTextArea") 
@@ -249,6 +256,7 @@ let copyToClipBoard = async (text) => {
 
     let getPricesButton = document.createElement("input");
     getPricesButton.setAttribute("type", 'button');
+    getPricesButton.setAttribute("id", 'getPrices');
     getPricesButton.setAttribute("value", "Get Prices")
     getPricesButton.addEventListener('click', ()=>{
         if(stringPrice === ""){
@@ -346,6 +354,7 @@ let copyToClipBoard = async (text) => {
     let submitProdNamesButton = document.createElement('input')
     submitProdNamesButton.setAttribute('type', 'button');
     submitProdNamesButton.setAttribute("value", "Submit ProdNames");
+    submitProdNamesButton.setAttribute("id", "SubmitProdNames");
     submitProdNamesButton.addEventListener("click",   ()=>{
 
         let idForm = document.getElementById("submitTextArea");
@@ -409,14 +418,15 @@ let copyToClipBoard = async (text) => {
         observer.observe(modalRoot, {childList:true, subtree: true});
 
     })
-    
-    mainForm.prepend(loadAllProductButton);
-    mainForm.prepend(refreshButton);
-    mainForm.prepend(loadProductButton)
-    mainForm.prepend(getPricesButton);
-    mainForm.prepend(getTextArea);
-    mainForm.prepend(submitProdNamesButton);
-    mainForm.prepend(submitText);
-
-    document.body.prepend(mainForm);
+    div1.prepend(loadAllProductButton);
+    div1.prepend(refreshButton);
+    div1.prepend(loadProductButton);
+    div2.prepend(getPricesButton);
+    div2.prepend(getTextArea);
+    div2.prepend(submitProdNamesButton);
+    div2.prepend(submitText);
+    mainForm.prepend(div1);
+    mainForm.prepend(div2);
+    let root = document.getElementById("root");
+    root.prepend(mainForm);
 
