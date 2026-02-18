@@ -137,7 +137,7 @@ let getHtmlString = (selector) => {
     return elem.textContent;
     }
 
-let waitForHtmlModal = ( priceSelector, xBoxSelector)=>{
+let getPriceXbox = ( priceSelector, xBoxSelector)=>{
     let xboxElement = getHE(xBoxSelector);   
     let lowestPricePerUnitString = getHtmlString(priceSelector); 
     return {xboxElement, lowestPricePerUnitString};
@@ -262,7 +262,7 @@ let prodListMutatObs = (selector, callBfunc) =>{
     let modal = getHE(modalSelector);
     console.log("modal", modal);
     if( modal ){            
-        let priceXbox = waitForHtmlModal(lowestPricePerUnitSelector, xBoxSelector);
+        let priceXbox = getPriceXbox(lowestPricePerUnitSelector, xBoxSelector);
         if(priceXbox.lowestPricePerUnitString){ 
             //compensate the offset to of the initial productactuator
             // console.log("priceXbox", priceXbox);
