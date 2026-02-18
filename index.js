@@ -256,6 +256,43 @@ let copyToClipBoard = async (text) => {
         console.error("clipboard copy did not work", error);
     }
 }
+
+let prodListMutatObs = (selector, callBfunc) =>{
+    let observer = new MutationObserver((mutations, obs)=>{
+    let modal = getHE(modalSelector);
+    console.log("modal", modal);
+    if( modal ){            
+        let priceXbox = waitForHtmlModal(lowestPricePerUnitSelector, xBoxSelector);
+        if(priceXbox.lowestPricePerUnitString){ 
+            //compensate the offset to of the initial productactuator
+            // console.log("priceXbox", priceXbox);
+            prodName = getHE(prodNameSelector).textContent.split(",");
+            // console.log("prodName", prodName[0])
+            //update the initmap, close modal and disconnect
+            initMap.set(prodName[0], priceXbox.lowestPricePerUnitString);
+            priceXbox.xboxElement.click(); 
+            console.log("counter: ",counter, " numProds: ", numProds);
+            counter++;
+            console.log("counter is now", counter);
+            if(counter < numProds) callBfunc(counter);
+            if(counter >= numProds){
+                console.log("counter ", counter, " >= ", " numProds ", numProds )
+                obs.disconnect();
+                resetCounterNumProdsNumClkLoadBtn();
+
+                let listOfFinalPrices = createArryOfUpdatedPrices(originalMap, initMap);
+                // console.log("listOfFinalPrices", listOfFinalPrices);
+                stringPrice = stringifyPrices(listOfFinalPrices);
+                // console.log("final stringPrice", stringPrice);
+                if(loadProductHasbeenClicked == false) loadProductHasbeenClicked = true;
+                return;
+            }
+        }
+    }               
+});
+    
+observer.observe(selector, {childList:true, subtree: true});
+}
     
     // console.log(stringPrice);
     let mainForm = document.createElement("form");
@@ -302,42 +339,10 @@ let copyToClipBoard = async (text) => {
         }
         //preload
         let modalRoot = getHE(rootModalSelector);
-        let observer = new MutationObserver((mutations, obs)=>{
-            let modal = getHE(modalSelector);
-            console.log("modal", modal);
-            if( modal ){            
-                let priceXbox = waitForHtmlModal(lowestPricePerUnitSelector, xBoxSelector);
-                if(priceXbox.lowestPricePerUnitString){ 
-                    //compensate the offset to of the initial productactuator
-                    // console.log("priceXbox", priceXbox);
-                    prodName = getHE(prodNameSelector).textContent.split(",");
-                    // console.log("prodName", prodName[0])
-                    //update the initmap, close modal and disconnect
-                    initMap.set(prodName[0], priceXbox.lowestPricePerUnitString);
-                    priceXbox.xboxElement.click(); 
-                    console.log("counter: ",counter, " numProds: ", numProds);
-                    counter++;
-                    console.log("counter is now", counter);
-                    if(counter < numProds) productActuator(counter);
-                    if(counter >= numProds){
-                        console.log("counter ", counter, " >= ", " numProds ", numProds )
-                        
-                        resetCounterNumProdsNumClkLoadBtn();
-                        priceXbox.xboxElement.click(); 
-                        let listOfFinalPrices = createArryOfUpdatedPrices(originalMap, initMap);
-                        // console.log("listOfFinalPrices", listOfFinalPrices);
-                        stringPrice = stringifyPrices(listOfFinalPrices);
-                        // console.log("final stringPrice", stringPrice);
-                        obs.disconnect();
-                        if(loadProductHasbeenClicked == false) loadProductHasbeenClicked = true;
-                        return;
-                    }
-                }
-            }
-        });
+        // variable  needed modalRoot and productrefresher
+        prodListMutatObs( modalRoot, productActuator);
         let buttonObserver = new MutationObserver((mutations, obs)  =>{
-        console.log("numClkLoadBtn: ", numClkLoadBtn, " >= ", " numberClickOfLoadMoreProducts: ", numberClickOfLoadMoreProducts);
-
+            console.log("numClkLoadBtn: ", numClkLoadBtn, " >= ", " numberClickOfLoadMoreProducts: ", numberClickOfLoadMoreProducts);
             if(numClkLoadBtn >= numberClickOfLoadMoreProducts){
                 obs.disconnect(); 
                 execMainProgram();
@@ -346,7 +351,6 @@ let copyToClipBoard = async (text) => {
             loadProducts();
         })
         
-        observer.observe(modalRoot, {childList:true, subtree: true});
         buttonObserver.observe(modalRoot, {childList:true, subtree:true});
 
     });    
@@ -401,42 +405,13 @@ let copyToClipBoard = async (text) => {
         }
         let modalRoot = getHE(rootModalSelector);
         productRefresher(counter);
-        let observer = new MutationObserver((mutations, obs)=>{
-            let modal = getHE(modalSelector);
-            console.log("modal", modal);
-            if( modal ){            
-                let priceXbox = waitForHtmlModal(lowestPricePerUnitSelector, xBoxSelector);
-                if(priceXbox.lowestPricePerUnitString){ 
-                    //compensate the offset to of the initial productactuator
-                    // console.log("priceXbox", priceXbox);
-                    prodName = getHE(prodNameSelector).textContent.split(",");
-                    // console.log("prodName", prodName[0])
-                    //update the initmap, close modal and disconnect
-                    initMap.set(prodName[0], priceXbox.lowestPricePerUnitString);
-                    priceXbox.xboxElement.click(); 
-                    console.log("counter: ",counter, " numProds: ", numProds);
-                    counter++;
-                    console.log("counter is now", counter);
-                    if(counter < numProds) productRefresher(counter);
-                    if(counter >= numProds){
-                        console.log("counter ", counter, " >= ", " numProds ", numProds )
-                        obs.disconnect();
-                        resetCounterNumProdsNumClkLoadBtn();
+        // variable  needed modalRoot and productrefresher
+        prodListMutatObs( modalRoot, productRefresher);
 
-                        let listOfFinalPrices = createArryOfUpdatedPrices(originalMap, initMap);
-                        // console.log("listOfFinalPrices", listOfFinalPrices);
-                        stringPrice = stringifyPrices(listOfFinalPrices);
-                        // console.log("final stringPrice", stringPrice);
-                        if(loadProductHasbeenClicked == false) loadProductHasbeenClicked = true;
-                        return;
-                    }
-                }
-            }               
-        });
-        
-        observer.observe(modalRoot, {childList:true, subtree: true});
+    });
 
-    })
+
+
     div1.prepend(loadAllProductButton);
     div1.prepend(refreshButton);
     div1.prepend(loadProductButton);
