@@ -163,6 +163,8 @@ let clickThroughPriceTiersBtn = (index)=>{
         detailPricingButton = product.children[0].children[0].children[3].children[0];
     } catch(error){
         console.error("detailPricingButton was not available", error )
+        console.log("product", product);
+        console.log("detailPricingButton", product.children[0].children[0].children[3].children[0]);
         detailPricingButton = product;
     }
     detailPricingButton.click();
@@ -171,6 +173,9 @@ let clickThroughPriceTiersBtn = (index)=>{
          lowestPriceButton = product.children[0].children[0].children[3].children[1].children[0].children[1].children[0].children[0].children[2].children[0].children[0];
     }catch(error){
         console.error("it is running on a mobile gui, no lowestPriceButton available on non mobile gui ", error);
+        console.log("product", product);
+        console.log("lowestPriceButton", product.children[0].children[0].children[3].children[1].children[0].children[1].children[0].children[0].children[2].children[0].children[0]);
+
         // its mobile gui
         lowestPriceButton = product.children[0].children[0].children[3].children[1].children[0].children[1].children[0].children[0].children[0].children[0].children[2];
     }
@@ -180,7 +185,9 @@ let clickThroughPriceTiersBtn = (index)=>{
         priceTiersButton = product.children[0].children[1].children[0].children[1].children[0].children[0].children[4].children[0];
         // console.log("priceTiersButton", priceTiersButton);
      }catch(error){
-        console.error("priceTierButton was not available, ", error)
+        console.error("priceTierButton was not available, ", error);
+        console.log("product", product);
+        console.log("priceTiersButton", product.children[0].children[1].children[0].children[1].children[0].children[0].children[4].children[0]);
         priceTiersButton = product;
      }
     priceTiersButton.click();
