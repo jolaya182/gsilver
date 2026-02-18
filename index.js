@@ -69,7 +69,7 @@ let resetAllVariables = () =>{
  listOfProducts = [];
  neededProductsElems = [];
  prodToSubmitArryObj = [];
- initMap = new Map();
+ originalMap.forEach(item => {initMap.set(item, "0");})
  console.log("variables reseted");
 }
 
@@ -154,6 +154,7 @@ let loadProducts = () =>{
 let clickThroughPriceTiersBtn = (index)=>{
     // click on the details pricing and wait for the modal to show up
     console.log("clickThroughPriceTiersBtn counter index ", index )
+    console.log()
     let product = neededProductsElems[index];
     let detailPricingButton = null;
     let lowestPriceButton = null;
@@ -198,7 +199,6 @@ let clickPriceTiersBtn = (index)=>{
     // click on the details pricing and wait for the modal to show up
     console.log("clickPriceTiersBtn counter index ", index )
     let product = neededProductsElems[index];
-    
     let priceTiersButton = null;
 
      try{ 
@@ -216,14 +216,12 @@ let filterNeededProducts = () =>{
     let prodName = null;
     let product = null;
     try{
-            listOfProducts = document.querySelectorAll("ul").item(6).children; // if not found , than try number 6 for  a mobile gui   
+        listOfProducts = document.querySelectorAll("ul").item(6).children; // if not found , than try number 6 for  a mobile gui   
 
     }catch(error){
         console.error("you are on mobile ")
         listOfProducts = document.querySelectorAll("ul").item(2).children;
-    }
-
-    
+    }    
     console.log("listOfProducts length ", listOfProducts.length);
     console.log("listofProducts ", listOfProducts);
     for (let index = 0; index < listOfProducts.length; index++) {
@@ -240,8 +238,7 @@ let filterNeededProducts = () =>{
     if (initMap.get(prodName) != undefined) {
         numProds++;
         neededProductsElems.push(product );
-        }// eof of the if product accepted filter 
-
+    }// eof of the if product accepted filter 
     // continue the loop
     }
 }
