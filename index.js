@@ -1,5 +1,3 @@
-let inputTextSelector = "#root > div.sc-geEHAE.kTTBHH > section > div > div.sc-ddQoNp.gbTkRY > div.sc-fgOGuH.biTlGQ > div > div.ais-SearchBox.sc-HUrrW.oRWom > form > input";
-let listOfProducts = document.querySelectorAll("ul").item(2).children;
 let numProds = null;
 let originalMap = [
     "100 oz Gold Bar",
@@ -39,6 +37,7 @@ let originalMap = [
     "1 oz Australian Silver Kangaroo Coin (Common Date)",
     "1 oz Silver Bar - Various Mints",
 ];
+let inputTextSelector = "#root > div.sc-geEHAE.kTTBHH > section > div > div.sc-ddQoNp.gbTkRY > div.sc-fgOGuH.biTlGQ > div > div.ais-SearchBox.sc-HUrrW.oRWom > form > input";
 let lowestUnitPriceString = "div.sc-dRKXJR, div.dkNZJN";
 let loadMoreButtonSelector = "#root > div.sc-geEHAE.kTTBHH > section > div > div > div.sc-fweGeb.kUzkwc > div > div > div > div > button.sc-hBEYos.hzhVbU.sc-bQltev.cDdDVA";
 let lowestPricePerUnitSelector = "#root > div.sc-nFpLZ.hezXcJ > div > div > div.sc-clsHhM.dcyGMh > div > div.sc-hJJQhR.hwHWUe > div.sc-fxNNfJ.kgjyeD > div:nth-child(1) > div > div.sc-dRKXJR.dkNZJN > p";
@@ -46,6 +45,7 @@ let xBoxSelector = "#root > div.sc-nFpLZ.hezXcJ > div > div > div.sc-ehSCib.dpAJ
 let rootModalSelector = `#root `;
 let modalSelector = "#root > div.sc-nFpLZ.hezXcJ";
 let prodNameSelector = "#root > div.sc-nFpLZ.hezXcJ > div > div > div.sc-clsHhM.dcyGMh > div > h2";
+let s = "1 oz Gold Britannia Coin (Common Date), 1;1/2 oz Canadian Gold Maple Leaf Coin (Common Date), 1;1/10 oz Canadian Gold Maple Leaf Coin (Common Date), 2;1 oz Canadian Silver Maple Leaf Coin (Common Date), 7;	";
 let counter = 0;
 let numberClickOfLoadMoreProducts = 0;
 let numberClickOfLoadMoreProductsMax = 3;
@@ -53,10 +53,24 @@ let loadProductHasbeenClicked = false;
 let loadAllProductHasBeenClicked = false;
 let numClkLoadBtn = 0;
 let stringPrice = "";
-let s = "1 oz Gold Britannia Coin (Common Date), 1;1/2 oz Canadian Gold Maple Leaf Coin (Common Date), 1;1/10 oz Canadian Gold Maple Leaf Coin (Common Date), 2;1 oz Canadian Silver Maple Leaf Coin (Common Date), 7;	"
+let listOfProducts = [];
 let neededProductsElems = [];
 let prodToSubmitArryObj = [];
 const initMap = new Map();
+
+let resetAllVariables = () =>{
+ counter = 0;
+ numberClickOfLoadMoreProducts = 0;
+ numberClickOfLoadMoreProductsMax = 3;
+ loadProductHasbeenClicked = false;
+ loadAllProductHasBeenClicked = false;
+ numClkLoadBtn = 0;
+ stringPrice = "";
+ listOfProducts = [];
+ neededProductsElems = [];
+ prodToSubmitArryObj = [];
+ initMap = new Map();
+}
 //html set
 let resetCounterNumProdsNumClkLoadBtn = () =>{
         counter = 0;
@@ -172,14 +186,14 @@ let productActuator = (index)=>{
 
 let productRefresher = (index)=>{
     // click on the details pricing and wait for the modal to show up
-    console.log("productActuator counter index ", index )
+    console.log("productRefresher counter index ", index )
     let product = neededProductsElems[index];
     
     let priceTiersButton = null;
 
      try{ 
         priceTiersButton = product.children[0].children[1].children[0].children[1].children[0].children[0].children[4].children[0];
-        // console.log("priceTiersButton", priceTiersButton);
+        console.log("priceTiersButton", priceTiersButton);
      }catch(error){
         console.error("priceTierButton was not available, ", error)
         priceTiersButton = product;
