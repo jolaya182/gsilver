@@ -187,9 +187,9 @@ let clickThroughPriceTiersBtn = (index)=>{
 
 }
 
-let productRefresher = (index)=>{
+let clickPriceTiersBtn = (index)=>{
     // click on the details pricing and wait for the modal to show up
-    console.log("productRefresher counter index ", index )
+    console.log("clickPriceTiersBtn counter index ", index )
     let product = neededProductsElems[index];
     
     let priceTiersButton = null;
@@ -339,7 +339,7 @@ observer.observe(selector, {childList:true, subtree: true});
         }
         //preload
         let modalRoot = getHE(rootModalSelector);
-        // variable  needed modalRoot and productrefresher
+        // variable  needed modalRoot and clickPriceTiersBtn
         prodListMutatObs( modalRoot, clickThroughPriceTiersBtn);
         let buttonObserver = new MutationObserver((mutations, obs)  =>{
             console.log("numClkLoadBtn: ", numClkLoadBtn, " >= ", " numberClickOfLoadMoreProducts: ", numberClickOfLoadMoreProducts);
@@ -404,9 +404,9 @@ observer.observe(selector, {childList:true, subtree: true});
             return;
         }
         let modalRoot = getHE(rootModalSelector);
-        productRefresher(counter);
-        // variable  needed modalRoot and productrefresher
-        prodListMutatObs( modalRoot, productRefresher);
+        clickPriceTiersBtn(counter);
+        // variable  needed modalRoot and clickPriceTiersBtn
+        prodListMutatObs( modalRoot, clickPriceTiersBtn);
 
     });
 
