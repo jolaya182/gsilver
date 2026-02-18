@@ -191,10 +191,12 @@ let productRefresher = (index)=>{
 let filterNeededProducts = () =>{
     let prodName = null;
     let product = null;
-    if(document.querySelectorAll("ul").item(2).classList === ""){
-        listOfProducts = document.querySelectorAll("ul").item(2).children;// you are on a mobile gui and if not, than try number 6
-    }else{
-        listOfProducts = document.querySelectorAll("ul").item(6).children
+    try{
+            listOfProducts = document.querySelectorAll("ul").item(6).children; // if not found , than try number 6 for  a mobile gui   
+
+    }catch(error){
+        console.error("you are on mobile ")
+        listOfProducts = document.querySelectorAll("ul").item(2).children;
     }
 
     
