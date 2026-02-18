@@ -151,9 +151,9 @@ let loadProducts = () =>{
     loadMoreProductsButton.click();
 }
 
-let productActuator = (index)=>{
+let clickThroughPriceTiersBtn = (index)=>{
     // click on the details pricing and wait for the modal to show up
-    console.log("productActuator counter index ", index )
+    console.log("clickThroughPriceTiersBtn counter index ", index )
     let product = neededProductsElems[index];
     let detailPricingButton = null;
     let lowestPriceButton = null;
@@ -243,7 +243,7 @@ let filterNeededProducts = () =>{
 let execMainProgram = ()=>{
     //set up
     filterNeededProducts();
-    productActuator(counter);
+    clickThroughPriceTiersBtn(counter);
     //return a list of prodnames and price in a text format
 }
 
@@ -264,7 +264,7 @@ let prodListMutatObs = (selector, callBfunc) =>{
     if( modal ){            
         let priceXbox = getPriceXbox(lowestPricePerUnitSelector, xBoxSelector);
         if(priceXbox.lowestPricePerUnitString){ 
-            //compensate the offset to of the initial productactuator
+            //compensate the offset to of the initial clickThroughPriceTiersBtn
             // console.log("priceXbox", priceXbox);
             prodName = getHE(prodNameSelector).textContent.split(",");
             // console.log("prodName", prodName[0])
@@ -340,7 +340,7 @@ observer.observe(selector, {childList:true, subtree: true});
         //preload
         let modalRoot = getHE(rootModalSelector);
         // variable  needed modalRoot and productrefresher
-        prodListMutatObs( modalRoot, productActuator);
+        prodListMutatObs( modalRoot, clickThroughPriceTiersBtn);
         let buttonObserver = new MutationObserver((mutations, obs)  =>{
             console.log("numClkLoadBtn: ", numClkLoadBtn, " >= ", " numberClickOfLoadMoreProducts: ", numberClickOfLoadMoreProducts);
             if(numClkLoadBtn >= numberClickOfLoadMoreProducts){
