@@ -83,6 +83,7 @@ let resetCounterNumProdsNumClkLoadBtn = () =>{
 //input from the client, receives a string and returns an array of objects { prod : quantity}
 let processStringedSelectedProducts = (s)=>{
     let selectedProducts = s.split(';');
+    console.log("selected products", selectedProducts )
       selectedProducts.map((product)=>{
         let prod = product.split(",")
         
@@ -383,17 +384,47 @@ observer.observe(selector, {childList:true, subtree: true});
     submitProdNamesButton.setAttribute("value", "Submit ProdNames");
     submitProdNamesButton.setAttribute("id", "SubmitProdNames");
     submitProdNamesButton.addEventListener("click",   ()=>{
+        let value = "1 oz Gold Britannia Coin (Common Date), 1;1/2 oz Canadian Gold Maple Leaf Coin (Common Date), 1;1/10 oz Canadian Gold Maple Leaf Coin (Common Date), 2;1 oz Canadian Silver Maple Leaf Coin (Common Date), 7;	";
+        // if(value === ""){
+        //     alert("the text submited is empty");
+        //     return;
+        // }
 
+        // let idForm = document.getElementById("submitTextArea");
+        // let value = idForm.value
+        // console.log("value", value);
+        // let prodToSubmitArryObj = processStringedSelectedProducts(value);
+        // console.log("prodToSubmitArryObj, ", prodToSubmitArryObj);
+        for(let i = 0; i < 5; i++){
+            document.getElementsById("submitHelperBtn").click();
+        }
+
+    });
+
+    let submitHelperBtn = document.createElement('input')
+    submitHelperBtn.setAttribute('type', 'button');
+    submitHelperBtn.setAttribute("value", "submitHelperBtn");
+    submitHelperBtn.setAttribute("id", "submitHelperBtn");
+    submitHelperBtn.addEventListener("click",   ()=>{
         let idForm = document.getElementById("submitTextArea");
         let value = idForm.value
         // let value = "1 oz Gold Britannia Coin (Common Date), 1;1/2 oz Canadian Gold Maple Leaf Coin (Common Date), 1;1/10 oz Canadian Gold Maple Leaf Coin (Common Date), 2;1 oz Canadian Silver Maple Leaf Coin (Common Date), 7;	";
-        if(value === ""){
-            alert("the text submited is empty");
-            return;
-        }
-        let prodToSubmitArryObj = processStringedSelectedProducts(value);
-        console.log("prodToSubmitArryObj, ", prodToSubmitArryObj);
+        // if(value === ""){
+        //     alert("the text submited is empty");
+        //     return;
+        // }
 
+        let listUrl = [
+            "https://app.goldsilver.com/buy"
+        ]
+        let opnLink = (link)=>{
+            window.open(link,"_blank").focus();
+        }
+
+        listUrl.forEach((link, indx)=>{
+            setTimeout(()=>opnLink(link), 0);
+
+        });
 
     });
 
@@ -414,17 +445,15 @@ observer.observe(selector, {childList:true, subtree: true});
 
     });
 
-
-
     div1.prepend(loadAllProductButton);
     div1.prepend(refreshButton);
     div1.prepend(loadProductButton);
     div2.prepend(getPricesButton);
     div2.prepend(getTextArea);
     div2.prepend(submitProdNamesButton);
+    div2.prepend(submitHelperBtn);
     div2.prepend(submitText);
     mainForm.prepend(div1);
     mainForm.prepend(div2);
     let root = document.getElementById("root");
     root.prepend(mainForm);
-
