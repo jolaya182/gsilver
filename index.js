@@ -1,4 +1,5 @@
 let numProds = null;
+let nextLink = "https://app.goldsilver.com/buy";
 let originalMap = [
     "100 oz Gold Bar",
     "1 Kilo Gold Bar - Various Mints",
@@ -84,14 +85,16 @@ let resetCounterNumProdsNumClkLoadBtn = () =>{
 let processStringedSelectedProducts = (s)=>{
     let selectedProducts = s.split(';');
     console.log("selected products", selectedProducts )
-      selectedProducts.map((product)=>{
+      let newSelectedProducts = selectedProducts.map((product)=>{
         let prod = product.split(",")
-        
-        return {prodName:prod[0], prodQuantity:prod[1]}
+        let newProObj = {} ;
+        newProObj.prodName = prod[0]; 
+        newProObj.prodQuantity = prod[1];
+        return newProObj
     });
     //eliminate the last unncessary line
-    selectedProducts.pop();
-    return selectedProducts;
+    newSelectedProducts.pop();
+    return newSelectedProducts;
 }
 
 let newProducts = processStringedSelectedProducts(s)
@@ -99,8 +102,9 @@ let newProducts = processStringedSelectedProducts(s)
 let mapOfSelectedProductQty = (arryProd)=>{
     let initialMap = new Map();
     arryProd.forEach((prod)=>{
-        let prodNameQty = prod.split(",");
-        initialMap.set( prodNameQty[0], prodNameQty[1])
+        let prodQty = prod.prodQuantity;
+        let prodName = prod.prodName;
+        initialMap.set( prodName , prodQty)
     })
     return initialMap;
 }
@@ -379,54 +383,145 @@ observer.observe(selector, {childList:true, subtree: true});
     });    
 
 
+    let recursiveStringFunc = ()=>{
+        return `alert("hello1");
+        let mainForm = document.createElement("form");
+        Object.assign(mainForm.style, { "z-index":"1000",position:"sticky", top: "0", display: "flex", "flex-direction":"row", "flex-wrap": "wrap", "justify-content": "space-around", color: "blue", backgroundColor:"#e5e5e5", height:"100px"});
+
+        let div1 = document.createElement("div");
+        Object.assign(div1.style, {display: "flex", "flex-direction":"row","font-size":"24px", margin: "10px", padding: "20px, "});
+
+    
+        let textareaHelper = document.createElement('input');
+        textareaHelper.setAttribute('type', 'textarea');
+        textareaHelper.setAttribute("id", "submitHelperBtn");
+        console.log(localStorage.getItem("stackProd"))
+
+        let submitHelperBtn = document.createElement('input');
+        submitHelperBtn.setAttribute('type', 'button');
+        submitHelperBtn.setAttribute("value", "submitHelperBtn");
+        submitHelperBtn.setAttribute("id", "submitHelperBtn");
+        submitHelperBtn.addEventListener("click",   ()=>{
+            // let idForm = document.getElementById("submitTextArea");
+            // let value = idForm.value
+            let value = "1 oz Gold Britannia Coin (Common Date), 1;1/2 oz Canadian Gold Maple Leaf Coin (Common Date), 1;1/10 oz Canadian Gold Maple Leaf Coin (Common Date), 2;1 oz Canadian Silver Maple Leaf Coin (Common Date), 7;	";
+            if(value === ""){
+                alert("the text submited is empty");
+                return;
+            }
+
+            // let newTab = window.open(nextLink,"_blank");
+            let newTab = window.open("https://app.goldsilver.com/buy","_blank");
+            let mainForm = document.createElement("form");
+            Object.assign(mainForm.style, { "z-index":"1000",position:"sticky", top: "0", display: "flex", "flex-direction":"row", "flex-wrap": "wrap", "justify-content": "space-around", color: "blue", backgroundColor:"#e5e5e5", height:"100px"});
+
+            let div1 = document.createElement("div");
+            Object.assign(div1.style, {display: "flex", "flex-direction":"row","font-size":"24px", margin: "10px", padding: "20px, "});
+    
+            div1.prepend(submitHelperBtn);
+            div1.prepend(textareaHelper);
+
+            
+            newTab.document.body.appendChild(script);
+            
+            let root = document.getElementById("root");
+            root.prepend(div1);
+            let script = document.createElement('script');
+            script.textContent = recursiveStringFunc();
+            newTab.document.body.appendChild(script);
+        });
+        div1.prepend(submitHelperBtn);
+        div1.prepend(textareaHelper);
+
+        let root = document.getElementById("root");
+        root.prepend(div1); 
+        `;
+    }
+
     let submitProdNamesButton = document.createElement('input')
     submitProdNamesButton.setAttribute('type', 'button');
     submitProdNamesButton.setAttribute("value", "Submit ProdNames");
     submitProdNamesButton.setAttribute("id", "SubmitProdNames");
     submitProdNamesButton.addEventListener("click",   ()=>{
         let value = "1 oz Gold Britannia Coin (Common Date), 1;1/2 oz Canadian Gold Maple Leaf Coin (Common Date), 1;1/10 oz Canadian Gold Maple Leaf Coin (Common Date), 2;1 oz Canadian Silver Maple Leaf Coin (Common Date), 7;	";
-        // if(value === ""){
-        //     alert("the text submited is empty");
-        //     return;
-        // }
+        if(value === ""){
+            alert("the text submited is empty");
+            return;
+        }
+
+    let recursiveStringFunc = ()=>{
+        return `alert("hello1");
+        let mainForm = document.createElement("form");
+        Object.assign(mainForm.style, { "z-index":"1000",position:"sticky", top: "0", display: "flex", "flex-direction":"row", "flex-wrap": "wrap", "justify-content": "space-around", color: "blue", backgroundColor:"#e5e5e5", height:"100px"});
+
+        let div1 = document.createElement("div");
+        Object.assign(div1.style, {display: "flex", "flex-direction":"row","font-size":"24px", margin: "10px", padding: "20px, "});
+
+    
+        let textareaHelper = document.createElement('input');
+        textareaHelper.setAttribute('type', 'textarea');
+        textareaHelper.setAttribute("id", "submitHelperBtn");
+        console.log(localStorage.getItem("stackProd"))
+
+        let submitHelperBtn = document.createElement('input');
+        submitHelperBtn.setAttribute('type', 'button');
+        submitHelperBtn.setAttribute("value", "submitHelperBtn");
+        submitHelperBtn.setAttribute("id", "submitHelperBtn");
+        submitHelperBtn.addEventListener("click",   ()=>{
+            // let idForm = document.getElementById("submitTextArea");
+            // let value = idForm.value
+            let value = "1 oz Gold Britannia Coin (Common Date), 1;1/2 oz Canadian Gold Maple Leaf Coin (Common Date), 1;1/10 oz Canadian Gold Maple Leaf Coin (Common Date), 2;1 oz Canadian Silver Maple Leaf Coin (Common Date), 7;	";
+            if(value === ""){
+                alert("the text submited is empty");
+                return;
+            }
+
+            // let newTab = window.open(nextLink,"_blank");
+            let newTab = window.open("https://app.goldsilver.com/buy","_blank");
+            let mainForm = document.createElement("form");
+            Object.assign(mainForm.style, { "z-index":"1000",position:"sticky", top: "0", display: "flex", "flex-direction":"row", "flex-wrap": "wrap", "justify-content": "space-around", color: "blue", backgroundColor:"#e5e5e5", height:"100px"});
+
+            let div1 = document.createElement("div");
+            Object.assign(div1.style, {display: "flex", "flex-direction":"row","font-size":"24px", margin: "10px", padding: "20px, "});
+    
+            div1.prepend(submitHelperBtn);
+            div1.prepend(textareaHelper);
+
+            
+            newTab.document.body.appendChild(script);
+            
+            let root = document.getElementById("root");
+            root.prepend(div1);
+            let script = document.createElement('script');
+            script.textContent = recursiveStringFunc();
+            newTab.document.body.appendChild(script);
+        });
+        div1.prepend(submitHelperBtn);
+        div1.prepend(textareaHelper);
+
+        let root = document.getElementById("root");
+        root.prepend(div1); 
+        `;
+    }
 
         // let idForm = document.getElementById("submitTextArea");
         // let value = idForm.value
         // console.log("value", value);
-        // let prodToSubmitArryObj = processStringedSelectedProducts(value);
-        // console.log("prodToSubmitArryObj, ", prodToSubmitArryObj);
-        for(let i = 0; i < 5; i++){
-            document.getElementsById("submitHelperBtn").click();
-        }
+        let prodToSubmitArryObj = processStringedSelectedProducts(value);
+        console.log("prodToSubmitArryObj, ", prodToSubmitArryObj);
+        let parsedObj =  prodToSubmitArryObj.toString();
+        let stringParsedObj = JSON.stringify(parsedObj.toString());
+        console.log( "stringParsedObj", stringParsedObj  );
+        if(!localStorage.getItem("stackProd"))localStorage.setItem("stackProd", stringParsedObj);
+        let newTab = window.open(nextLink,"_blank");
+        let script = document.createElement('script');
+        script.textContent = recursiveStringFunc();
+        newTab.document.body.appendChild(script);
+        
 
     });
 
-    let submitHelperBtn = document.createElement('input')
-    submitHelperBtn.setAttribute('type', 'button');
-    submitHelperBtn.setAttribute("value", "submitHelperBtn");
-    submitHelperBtn.setAttribute("id", "submitHelperBtn");
-    submitHelperBtn.addEventListener("click",   ()=>{
-        let idForm = document.getElementById("submitTextArea");
-        let value = idForm.value
-        // let value = "1 oz Gold Britannia Coin (Common Date), 1;1/2 oz Canadian Gold Maple Leaf Coin (Common Date), 1;1/10 oz Canadian Gold Maple Leaf Coin (Common Date), 2;1 oz Canadian Silver Maple Leaf Coin (Common Date), 7;	";
-        // if(value === ""){
-        //     alert("the text submited is empty");
-        //     return;
-        // }
-
-        let listUrl = [
-            "https://app.goldsilver.com/buy"
-        ]
-        let opnLink = (link)=>{
-            window.open(link,"_blank").focus();
-        }
-
-        listUrl.forEach((link, indx)=>{
-            setTimeout(()=>opnLink(link), 0);
-
-        });
-
-    });
+     
 
     let refreshButton = document.createElement("input");
     refreshButton.setAttribute("type", "button");
@@ -442,7 +537,6 @@ observer.observe(selector, {childList:true, subtree: true});
         clickPriceTiersBtn(counter);
         // variable  needed modalRoot and clickPriceTiersBtn
         prodListMutatObs( modalRoot, clickPriceTiersBtn);
-
     });
 
     div1.prepend(loadAllProductButton);
@@ -451,7 +545,7 @@ observer.observe(selector, {childList:true, subtree: true});
     div2.prepend(getPricesButton);
     div2.prepend(getTextArea);
     div2.prepend(submitProdNamesButton);
-    div2.prepend(submitHelperBtn);
+
     div2.prepend(submitText);
     mainForm.prepend(div1);
     mainForm.prepend(div2);
