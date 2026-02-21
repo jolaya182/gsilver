@@ -57,6 +57,7 @@ let stringPrice = "";
 let listOfProducts = [];
 let neededProductsElems = [];
 let prodToSubmitArryObj = [];
+let submitedProdStack = [];
 let initMap = new Map();
 
 let resetAllVariables = () =>{
@@ -382,9 +383,6 @@ observer.observe(selector, {childList:true, subtree: true});
         loadProductButton.click();
     });    
 
-
-
-
     let submitProdNamesButton = document.createElement('input')
     submitProdNamesButton.setAttribute('type', 'button');
     submitProdNamesButton.setAttribute("value", "Submit ProdNames");
@@ -410,7 +408,6 @@ observer.observe(selector, {childList:true, subtree: true});
         let parsedObj =  prodToSubmitArryObj.toString();
         let stringParsedObj = JSON.stringify(parsedObj.toString());
         console.log( "stringParsedObj", stringParsedObj  );
-        if(!localStorage.getItem("stackProd"))localStorage.setItem("stackProd", stringParsedObj);
         let newTab = window.open(nextLink,"_blank");
             newTab.onload = () =>{
                 let script = newTab.document.createElement('script');
@@ -418,11 +415,8 @@ observer.observe(selector, {childList:true, subtree: true});
                 script.innerHTML = ProdNameQtyToTab();
                 newTab.document.body.appendChild(script);
             }
-        
-
     });
 
-     
 
     let refreshButton = document.createElement("input");
     refreshButton.setAttribute("type", "button");
@@ -440,14 +434,23 @@ observer.observe(selector, {childList:true, subtree: true});
         prodListMutatObs( modalRoot, clickPriceTiersBtn);
     });
 
+    let prodStackTextArea = document.createElement("input");
+    prodStackTextArea.setAttribute("id", "prodStackTextArea");
+    let prodStackBtn = document.createElement("input");
+    prodStackBtn.setAttribute("type", "button");
+    prodStackBtn.setAttribute("id", "prodStackBtn");
+    prodStackBtn.setAttribute("value", "prodFire");
+
     div1.prepend(loadAllProductButton);
     div1.prepend(refreshButton);
     div1.prepend(loadProductButton);
     div2.prepend(getPricesButton);
     div2.prepend(getTextArea);
+    div2.prepend(prodStackBtn);
+    div2.prepend(prodStackTextArea);
     div2.prepend(submitProdNamesButton);
-
     div2.prepend(submitText);
+
     mainForm.prepend(div1);
     mainForm.prepend(div2);
     let root = document.getElementById("root");
