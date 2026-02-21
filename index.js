@@ -394,20 +394,13 @@ observer.observe(selector, {childList:true, subtree: true});
             return;
         }
 
-    let ProdNameQtyToTab = ()=>{
-        return ` 
-
-        `;
-    }
 
         // let idForm = document.getElementById("submitTextArea");
         // let value = idForm.value
         // console.log("value", value);
-        let prodToSubmitArryObj = processStringedSelectedProducts(value);
+        submitedProdStack = processStringedSelectedProducts(value);
         console.log("prodToSubmitArryObj, ", prodToSubmitArryObj);
-        let parsedObj =  prodToSubmitArryObj.toString();
-        let stringParsedObj = JSON.stringify(parsedObj.toString());
-        console.log( "stringParsedObj", stringParsedObj  );
+  
         let newTab = window.open(nextLink,"_blank");
             newTab.onload = () =>{
                 let script = newTab.document.createElement('script');
