@@ -614,7 +614,7 @@ observer.observe(selector, {childList:true, subtree: true});
     prdNotInListBtn.addEventListener("click", ()=>{
         if(!prodsNotInMyList.length){
             alert("the list is empty please load products");
-            return
+            return;
         }
         document.getElementById("prodsNotInMyList").value = prodsNotInMyList.map((prod)=>prod.concat("\n")).toString();
     })
