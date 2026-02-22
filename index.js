@@ -62,6 +62,7 @@ let neededProductsElems = [];
 let prodToSubmitArryObj = [];
 let submitedProdStack = [];
 let submitedProdStackStringified = [];
+let prodsNotInMyList = [];
 let initMap = new Map();
 
 let resetAllVariables = () =>{
@@ -252,6 +253,9 @@ let filterNeededProducts = () =>{
     if (initMap.get(prodName) != undefined) {
         numProds++;
         neededProductsElems.push(product );
+    }else{
+        // it is not in may list
+        prodsNotInMyList.push(prodName);
     }// eof of the if product accepted filter 
     // continue the loop
     }
@@ -314,7 +318,7 @@ observer.observe(selector, {childList:true, subtree: true});
     
     // console.log(stringPrice);
     let mainForm = document.createElement("form");
-    Object.assign(mainForm.style, { "z-index":"1000",position:"sticky", top: "0", display: "flex", "flex-direction":"row", "flex-wrap": "wrap", "justify-content": "space-around", color: "blue", backgroundColor:"#e5e5e5", height:"200px"});
+    Object.assign(mainForm.style, { "z-index":"1000",position:"sticky", top: "0", display: "flex", "flex-direction":"row", "flex-wrap": "wrap", "justify-content": "space-around", color: "blue", backgroundColor:"#e5e5e5", height:"400px"});
 
     let div1 = document.createElement("div");
     Object.assign(div1.style, {display: "flex", "flex-direction":"row","font-size":"24px", margin: "10px", padding: "20px, "});
@@ -433,6 +437,7 @@ observer.observe(selector, {childList:true, subtree: true});
     });
 
     let prodStackTextArea = document.createElement("textarea");
+    Object.assign(prodStackTextArea.style, { width: "70%", height: "100px" });
     prodStackTextArea.setAttribute("id", "prodStackTextArea");
     let prodStackBtn = document.createElement("input");
     prodStackBtn.setAttribute("type", "button");
@@ -598,8 +603,24 @@ observer.observe(selector, {childList:true, subtree: true});
 
     });
 
-    Object.assign(prodStackTextArea.style, { width: "70%", height: "100px" });
+    let prdNotInListTextArea = document.createElement("textarea");
+    prdNotInListTextArea.setAttribute("id", "prodsNotInMyList");
+     Object.assign(prodStackTextArea.style, { width: "70%", height: "100px" });
+    let prdNotInListBtn = document.createElement("input");
+    prdNotInListBtn.setAttribute("id", "prdNotInListBtn");
+    prdNotInListBtn.setAttribute("type", "button");
+    prdNotInListBtn.setAttribute("value", "notProdList");
+    
+    prdNotInListBtn.addEventListener("click", ()=>{
+        if(!prodsNotInMyList.length){
+            alert("the list is empty please load products");
+            return
+        }
+        document.getElementById("prodsNotInMyList").value = prodsNotInMyList.map((prod)=>prod.concat("\n")).toString();
+    })
 
+    div1.prepend(prdNotInListBtn);
+    div1.prepend(prdNotInListTextArea);
     div1.prepend(loadAllProductButton);
     div1.prepend(refreshButton);
     div1.prepend(loadProductButton);
