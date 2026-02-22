@@ -245,6 +245,10 @@ let filterNeededProducts = () =>{
     }
 
     // find the prodname we are interested in the hash table
+    // console.log("prodName", prodName, )
+    // console.log("prodName == gold britannia", prodName == "1 oz Gold Britannia Coin (Common Date)" );
+    
+    // if(prodName == "1 oz Gold Britannia Coin (Common Date)" )console.log("initMap.get(prodName):",initMap.get( prodName), )
     if (initMap.get(prodName) != undefined) {
         numProds++;
         neededProductsElems.push(product );
@@ -283,7 +287,7 @@ let prodListMutatObs = (selector, callBfunc) =>{
             prodName = getHE(prodNameSelector).textContent.split(",");
             // console.log("prodName", prodName[0])
             //update the initmap, close modal and disconnect
-            initMap.set(prodName[0], priceXbox.lowestPricePerUnitString);
+            initMap.set(prodName[0].trim(), priceXbox.lowestPricePerUnitString);
             priceXbox.xboxElement.click(); 
             console.log("counter: ",counter, " numProds: ", numProds);
             counter++;
