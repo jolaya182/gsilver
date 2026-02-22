@@ -38,14 +38,17 @@ let originalMap = [
     "1 oz Australian Silver Kangaroo Coin (Common Date)",
     "1 oz Silver Bar - Various Mints",
 ];
-let inputTextSelector = "#root > div.sc-geEHAE.kTTBHH > section > div > div.sc-ddQoNp.gbTkRY > div.sc-fgOGuH.biTlGQ > div > div.ais-SearchBox.sc-HUrrW.oRWom > form > input";
-let lowestUnitPriceString = "div.sc-dRKXJR, div.dkNZJN";
-let loadMoreButtonSelector = "#root > div.sc-geEHAE.kTTBHH > section > div > div > div.sc-fweGeb.kUzkwc > div > div > div > div > button.sc-hBEYos.hzhVbU.sc-bQltev.cDdDVA";
-let lowestPricePerUnitSelector = "#root > div.sc-nFpLZ.hezXcJ > div > div > div.sc-clsHhM.dcyGMh > div > div.sc-hJJQhR.hwHWUe > div.sc-fxNNfJ.kgjyeD > div:nth-child(1) > div > div.sc-dRKXJR.dkNZJN > p";
+let loadMoreButtonSelector = "#root > div.sc-utZcN.cJaOBC > section > div > div > div.sc-dmqUwf.gVqMhg > div > div > div > div > button.sc-hBEYos.hzhVbU.sc-fweGeb.kUzkwc";
+let lowestPricePerUnitSelector = "#root > div.sc-nFpLZ.hezXcJ > div > div > div.sc-clsHhM.dcyGMh > div > div.sc-hJJQhR.hwHWUe > div.sc-fxNNfJ.kgjyeD > div:nth-child(1) > div > div.sc-ddQoNp.gbTkRY > p";
 let xBoxSelector = "#root > div.sc-nFpLZ.hezXcJ > div > div > div.sc-ehSCib.dpAJOV > button";
 let rootModalSelector = `#root `;
 let modalSelector = "#root > div.sc-nFpLZ.hezXcJ";
 let prodNameSelector = "#root > div.sc-nFpLZ.hezXcJ > div > div > div.sc-clsHhM.dcyGMh > div > h2";
+let buyBtn = "#root > div.sc-nFpLZ.hezXcJ > div > div > div.sc-clsHhM.dcyGMh > div > div.sc-eJMQSu.bFiYOs > button.sc-hBEYos.cvMDym";
+let nextBtn = "#root > div.sc-nFpLZ.hezXcJ > div > div > div.sc-clsHhM.dcyGMh > div > div > div > div > div.sc-eJMQSu.eMOJuk > button.sc-hBEYos.HuaGr";
+let quantityBtn = "#root > div.sc-nFpLZ.hezXcJ > div > div > div.sc-clsHhM.dcyGMh > div > div > div > div > form > div.sc-cKFVac.kvHAyu > div.sc-hgZQmf.eLEcJs > button:nth-child(2)";
+let amountInput = "#root > div.sc-nFpLZ.hezXcJ > div > div > div.sc-clsHhM.dcyGMh > div > div > div > div > form > p";
+let nextBtn2 = "#root > div.sc-nFpLZ.hezXcJ > div > div > div.sc-clsHhM.dcyGMh > div > div > div > div > form > div.sc-eJMQSu.eMOJuk > button.sc-hBEYos.HuaGr";
 let s = "1 oz Gold Britannia Coin (Common Date), 1;1/2 oz Canadian Gold Maple Leaf Coin (Common Date), 1;1/10 oz Canadian Gold Maple Leaf Coin (Common Date), 2;1 oz Canadian Silver Maple Leaf Coin (Common Date), 7;	";
 let counter = 0;
 let numberClickOfLoadMoreProducts = 0;
@@ -58,6 +61,7 @@ let listOfProducts = [];
 let neededProductsElems = [];
 let prodToSubmitArryObj = [];
 let submitedProdStack = [];
+let submitedProdStackStringified = [];
 let initMap = new Map();
 
 let resetAllVariables = () =>{
@@ -306,7 +310,7 @@ observer.observe(selector, {childList:true, subtree: true});
     
     // console.log(stringPrice);
     let mainForm = document.createElement("form");
-    Object.assign(mainForm.style, { "z-index":"1000",position:"sticky", top: "0", display: "flex", "flex-direction":"row", "flex-wrap": "wrap", "justify-content": "space-around", color: "blue", backgroundColor:"#e5e5e5", height:"100px"});
+    Object.assign(mainForm.style, { "z-index":"1000",position:"sticky", top: "0", display: "flex", "flex-direction":"row", "flex-wrap": "wrap", "justify-content": "space-around", color: "blue", backgroundColor:"#e5e5e5", height:"200px"});
 
     let div1 = document.createElement("div");
     Object.assign(div1.style, {display: "flex", "flex-direction":"row","font-size":"24px", margin: "10px", padding: "20px, "});
@@ -388,26 +392,23 @@ observer.observe(selector, {childList:true, subtree: true});
     submitProdNamesButton.setAttribute("value", "Submit ProdNames");
     submitProdNamesButton.setAttribute("id", "SubmitProdNames");
     submitProdNamesButton.addEventListener("click",   ()=>{
-        let value = "1 oz Gold Britannia Coin (Common Date), 1;1/2 oz Canadian Gold Maple Leaf Coin (Common Date), 1;1/10 oz Canadian Gold Maple Leaf Coin (Common Date), 2;1 oz Canadian Silver Maple Leaf Coin (Common Date), 7;	";
+        // let value = "1 oz Gold Britannia Coin (Common Date), 1;1/2 oz Canadian Gold Maple Leaf Coin (Common Date), 1;1/10 oz Canadian Gold Maple Leaf Coin (Common Date), 2;1 oz Canadian Silver Maple Leaf Coin (Common Date), 7;	";
+        let submitTextArea = document.getElementById("submitTextArea");
+        let value = submitTextArea.value
+        console.log("value", value);
         if(value === ""){
             alert("the text submited is empty");
             return;
         }
 
-
-        // let idForm = document.getElementById("submitTextArea");
-        // let value = idForm.value
-        // console.log("value", value);
         submitedProdStack = processStringedSelectedProducts(value);
-        console.log("prodToSubmitArryObj, ", prodToSubmitArryObj);
-  
-        let newTab = window.open(nextLink,"_blank");
-            newTab.onload = () =>{
-                let script = newTab.document.createElement('script');
-                script.type = "text/javascript";
-                script.innerHTML = ProdNameQtyToTab();
-                newTab.document.body.appendChild(script);
-            }
+        console.log("submitedProdStack", submitedProdStack)
+        submitedProdStackStringified = submitedProdStack.map((prod)=> `${prod.prodName} ${prod.prodQuantity} \n`);
+        console.log("submitedProdStackStringified", submitedProdStackStringified)
+        document.getElementById("prodStackTextArea").value = submitedProdStackStringified.toString();
+        submitTextArea.value = "";
+        console.log("submitedProdStack, ", submitedProdStack);
+
     });
 
 
@@ -427,12 +428,173 @@ observer.observe(selector, {childList:true, subtree: true});
         prodListMutatObs( modalRoot, clickPriceTiersBtn);
     });
 
-    let prodStackTextArea = document.createElement("input");
+    let prodStackTextArea = document.createElement("textarea");
     prodStackTextArea.setAttribute("id", "prodStackTextArea");
     let prodStackBtn = document.createElement("input");
     prodStackBtn.setAttribute("type", "button");
     prodStackBtn.setAttribute("id", "prodStackBtn");
     prodStackBtn.setAttribute("value", "prodFire");
+    prodStackBtn.addEventListener("click", ()=>{
+        if(submitedProdStack.length === 0){
+            console.log("submitedProdStack is empty , insert a list to the submit prodNames");
+            return;
+        }
+
+        let prodSelected = submitedProdStack.pop(); 
+        submitedProdStackStringified.pop()
+        prodStackTextArea.value =  submitedProdStackStringified;
+        
+        let ProdNameQtyToTab = (prodName, prodQty) =>{
+            return `
+            let prodName = "${prodName}";
+            let prodQty = "${prodQty}";
+
+            console.log( "prodName ", prodName , " prodQty ", prodQty );
+            let modalRoot = document.querySelectorAll("${rootModalSelector}").item(0);
+            let loadMoreBtn = document.querySelectorAll("${loadMoreButtonSelector}").item(0);
+            console.log("loadMoreBtn", loadMoreBtn);
+            console.log("modalRoot", modalRoot);
+            let loadProducts = () =>{
+                //load the products
+                numberOfClicksLoadButton++;
+                console.log("loadMoreBtn clicked !",loadMoreBtn );
+                loadMoreBtn.click();
+            }
+
+            let findProductHE = (prodNameString) =>{
+                console.log("prodNameString: ",prodNameString);
+                let prodName = null;
+                let product = null;
+                let listOfProducts = null
+                try{
+                    listOfProducts = document.querySelectorAll("ul").item(6).children; // if not found , than try number 6 for  a mobile gui   
+
+                }catch(error){
+                    console.error("you are on mobile ")
+                    listOfProducts = document.querySelectorAll("ul").item(2).children;
+                }    
+                console.log("listOfProducts length ", listOfProducts.length);
+                console.log("listofProducts ", listOfProducts);
+                for (let index = 0; index < listOfProducts.length; index++) {
+                
+                try{
+                    // get the name of the product name
+                    product = listOfProducts.item(index);
+                    prodName = product.children[0].children[0].children[1].children[0].children[0].textContent.trim();
+                    console.log("prodName loop: ", prodName, "prodNameString: ", prodNameString)
+                    if (prodName == prodNameString){console.log("prodName found", prodName);return product;}
+                }catch(error){
+                    console.error("product or productName was not able to be retrieved from the product list ", error)
+                }
+ 
+                // continue the loop
+                }
+            }
+
+            let clickThroughPriceTiersBtn = (product)=>{
+                // click on the details pricing and wait for the modal to show up
+                console.log("clickThroughPriceTiersBtn product ", product );
+                let detailPricingButton = null;
+                let lowestPriceButton = null;
+                let priceTiersButton = null;
+                try{
+                    detailPricingButton = product.children[0].children[0].children[3].children[0];
+                } catch(error){
+                    console.error("detailPricingButton was not available", error )
+                    console.log("product", product);
+                    console.log("detailPricingButton", product.children[0].children[0].children[3].children[0]);
+                    detailPricingButton = product;
+                }
+                detailPricingButton.click();
+
+                try{
+                    lowestPriceButton = product.children[0].children[0].children[3].children[1].children[0].children[1].children[0].children[0].children[2].children[0].children[0];
+                }catch(error){
+                    console.error("it is running on a mobile gui, no lowestPriceButton available on non mobile gui ", error);
+                    console.log("product", product);
+                    console.log("lowestPriceButton", product.children[0].children[0].children[3].children[1].children[0].children[1].children[0].children[0].children[2].children[0].children[0]);
+
+                    // its mobile gui
+                    lowestPriceButton = product.children[0].children[0].children[3].children[1].children[0].children[1].children[0].children[0].children[0].children[0].children[2];
+                }
+                lowestPriceButton.click();
+                
+                try{ 
+                    priceTiersButton = product.children[0].children[1].children[0].children[1].children[0].children[0].children[4].children[0];
+                    // console.log("priceTiersButton", priceTiersButton);
+                }catch(error){
+                    console.error("priceTierButton was not available, ", error);
+                    console.log("product", product);
+                    console.log("priceTiersButton", product.children[0].children[1].children[0].children[1].children[0].children[0].children[4].children[0]);
+                    priceTiersButton = product;
+                }
+                priceTiersButton.click();
+
+            }
+
+            let numberOfClicksLoadButton = ${numClkLoadBtn};
+            let numberOfCLicksLoadMoreProductsMax = ${numberClickOfLoadMoreProductsMax};
+            
+            let buttonObserver = new MutationObserver((mutations, obs)  =>{
+                loadMoreBtn = document.querySelectorAll("${loadMoreButtonSelector}").item(0);
+                if(loadMoreBtn){
+                    if(numberOfClicksLoadButton >= numberOfCLicksLoadMoreProductsMax){
+                        console.log("numberOfClicksLoadButton: ", numberOfClicksLoadButton, " >= ", " numberClickOfLoadMoreProducts: ", numberOfCLicksLoadMoreProductsMax);
+
+                        obs.disconnect(); 
+                        console.log("prodName observer", prodName)
+                        let foundProductHE = findProductHE(prodName);
+                        console.log("foundProductHE", foundProductHE);
+                        clickThroughPriceTiersBtn(foundProductHE);
+                        let modalPriceObserver = new MutationObserver((mutation, obs)=>{
+                            let buyBtn = document.querySelectorAll("${buyBtn}").item(0);
+                            let nextBtn = document.querySelectorAll("${nextBtn}").item(0);
+                            let quantityBtn = document.querySelectorAll("${quantityBtn}").item(0);
+                            let amountInput = document.querySelectorAll("${amountInput}").item(0);
+                            let nextBtn2 = document.querySelectorAll("${nextBtn2}").item(0);
+                            console.log("amountInput",amountInput, "prodQty", prodQty)
+                            try{
+                                if(buyBtn)buyBtn.click();
+                                if(nextBtn)nextBtn.click();
+                                if(quantityBtn)quantityBtn.click();
+                                if(amountInput){let input = document.createElement("textarea"); input.value= "type in this number: ".concat(prodQty); amountInput.appendChild(input);  obs.disconnect()};
+                                //if(nextBtn2){nextBtn2.click(); obs.disconnect()} // cannot place this line because the input box previously does not allow a change in inputvalue
+
+                            }catch (error){
+                                console.error("was not able to click on the modal buttons", error);
+                            }    
+
+                        });
+                        let modalRoot= document.querySelectorAll("${rootModalSelector}").item(0);
+                        modalPriceObserver.observe(modalRoot, {childList:true, subtree:true})
+                        
+                        return;
+                    }
+                }
+                
+            loadProducts();
+            });
+
+            buttonObserver.observe(modalRoot, {childList:true, subtree:true});
+            modalRoot.click();
+            `;
+        }
+
+        console.log("prodSelected", prodSelected)
+        let newTab = window.open(nextLink,"_blank");
+        newTab.onload = () =>{
+            setTimeout(()=>{
+                let script = newTab.document.createElement('script');
+                script.type = "text/javascript";
+                script.innerHTML  = ProdNameQtyToTab(prodSelected.prodName.trim(), prodSelected.prodQuantity.trim()); //prodSelected
+                newTab.document.body.appendChild(script);
+            }, 1000);
+
+        }
+
+    });
+
+    Object.assign(prodStackTextArea.style, { width: "70%", height: "100px" });
 
     div1.prepend(loadAllProductButton);
     div1.prepend(refreshButton);
